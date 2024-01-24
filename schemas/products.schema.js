@@ -15,17 +15,13 @@ const ProductSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    required: false,
+    enum : ["FOR_SALE", "SOLD_OUT"], default : "FOR_SALE"
   },
   password: {
-    type: Number,
+    type: String,
     required: true,
   },
-  createAt: {
-    type: Date,
-    required: false,
-  },
-});
+}, { timestamps : true });
 
 ProductSchema.virtual("productId").get(function () {
   return this._id.toHexString();

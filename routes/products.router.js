@@ -5,10 +5,8 @@ const router = express.Router();
 
 router.post("/products", async (req, res) => {
   const { title, content, author, password } = req.body;
-  const status = "FOR-SALE";
-  const createAt = new Date();
-
-  if (!title || !content || !author || !password) {
+  
+  if (!req.body) {
     return res
       .status(400)
       .json({ errorMessage: "데이터 형식이 올바르지 않습니다." });
@@ -19,8 +17,6 @@ router.post("/products", async (req, res) => {
     content,
     author,
     password,
-    status,
-    createAt,
   });
 
   try {
@@ -36,8 +32,8 @@ router.post("/products", async (req, res) => {
 router.get("/products", async (req, res) => {
   try {
     const products = await Product.find()
-      .select("_id title author status createAt")
-      .sort("-createAt")
+      .select("_id title author status updatedAt")
+      .sort("-updatedAt")
       .exec();
     return res.status(200).json({ products });
   } catch (err) {
