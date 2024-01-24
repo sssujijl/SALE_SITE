@@ -21,7 +21,7 @@ router.post("/products", async (req, res) => {
 
   try {
     await product.save();
-    return res.json({ product });
+    return res.json({ message : "상품을 등록했습니다." });
   } catch (err) {
     return res
       .status(500)
